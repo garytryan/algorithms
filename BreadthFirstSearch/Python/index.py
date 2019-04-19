@@ -5,7 +5,7 @@ class Graph:
 
   def search(self, node):
     queue = [0]
-
+    visited = [0]
 
     while len(queue) > 0:
       currentEdge = queue.pop()
@@ -14,11 +14,13 @@ class Graph:
       if currentNode == node:
         return currentNode
       else:
+        visited.append(currentEdge)
+
         [
           queue.insert(0, tail)
           for head, tail
           in self.edges
-          if head == currentEdge
+          if head == currentEdge and tail not in visited
         ]
 
     return None
@@ -36,6 +38,7 @@ graph = Graph(
   # edges
   [
     (0, 1),
+    (1, 0),
     (0, 2),
     (2, 3),
     (3, 4)
