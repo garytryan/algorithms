@@ -4,7 +4,7 @@ const graph = {
   edges: [[1, 2], [2], [3]]
 };
 
-const depthFirstSearch = (graph, value, startVertex = 0) => {
+const breadthFirstSearch = (graph, value, startVertex = 0) => {
   let verticesToVisit = [graph.vertices[startVertex]];
 
   const verticesVisited = new Set();
@@ -37,4 +37,4 @@ const depthFirstSearch = (graph, value, startVertex = 0) => {
   return isFound;
 };
 
-console.log(depthFirstSearch(graph, "D"));
+console.log(breadthFirstSearch(graph, "D"));
