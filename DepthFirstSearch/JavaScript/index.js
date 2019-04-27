@@ -1,58 +1,30 @@
-const depthFirstSearch = (root, id) => {
-  if (root.id === id) {
-    return root;
-  }
+const flatten = array => array.reduce((a, e) => a.concat(e), []);
 
-  let index = 0;
-  let found = null;
-  while (index < root.children.length && found === null) {
-    const node = depthFirstSearch(root.children[index], id);
+const depthFirstSearch = (graph, target) => {
+  const visited = [];
+  const nodes = Array.from(new Set(flatten(graph.edges))).reverse();
 
-    if (node) {
+  while (nodes.length) {
+    const node = nodes.pop();
+
+    if (visited[node]) {
+      continue;
+    }
+
+    if (node === target) {
       return node;
     }
 
-    index++;
+    visited[node] = true;
+
+    graph.edges
+      .filter(([head, _]) => head === node)
+      .forEach(([_, tail]) => nodes.push(tail));
   }
 };
 
-const root = {
-  id: "A",
-  value: 1,
-  children: [
-    {
-      id: "B",
-      value: 2,
-      children: [
-        {
-          id: "C",
-          value: 4,
-          children: []
-        },
-        {
-          id: "D",
-          value: 5,
-          children: []
-        }
-      ]
-    },
-    {
-      id: "E",
-      value: 3,
-      children: [
-        {
-          id: "F",
-          value: 6,
-          children: []
-        },
-        {
-          id: "G",
-          value: 7,
-          children: []
-        }
-      ]
-    }
-  ]
+const graph = {
+  edges: [[0, 1], [0, 2], [1, 3], [1, 4], [2, 5], [2, 6]]
 };
 
-console.log(depthFirstSearch(root, "C"));
+console.log(depthFirstSearch(graph, 4));
